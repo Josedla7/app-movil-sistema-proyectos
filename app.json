@@ -1,0 +1,28 @@
+{
+  "expo": {
+    "name": "Proyecto Empresarial",
+    "slug": "proyecto-empresarial-movil",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "dark",
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "backgroundColor": "#0f172a",
+      "package": "com.kenneth30flp.proyectoempresarialmovil"
+    },
+    "web": {
+      "backgroundColor": "#0f172a"
+    },
+    "plugins": [
+      "expo-asset",
+      "expo-secure-store"
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "de1de16f-f4ec-49c7-b5ed-72c3f083a08f"
+      }
+    }
+  }
+}
