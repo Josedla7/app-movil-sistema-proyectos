@@ -29,10 +29,10 @@ export default function SplashScreen() {
 
   return (
     <View style={styles.container}>
-      <Animated.View 
+      <Animated.View
         style={[
-          styles.textContainer, 
-          { 
+          styles.textContainer,
+          {
             opacity: fadeAnim,
             transform: [
               { scale: scaleAnim },
@@ -43,7 +43,6 @@ export default function SplashScreen() {
       >
         <Text style={styles.logoText}>Gestor<Text style={styles.accentText}>Empresarial</Text></Text>
         <View style={styles.underline} />
-        <Text style={styles.subtitle}>Soluciones de Negocio</Text>
       </Animated.View>
     </View>
   );

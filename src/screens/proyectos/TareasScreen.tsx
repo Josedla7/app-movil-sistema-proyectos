@@ -10,6 +10,8 @@ import FormSelect from '../../components/FormSelect';
 import FormDatePicker from '../../components/FormDatePicker';
 import ConfirmModal from '../../components/ConfirmModal';
 import EmptyState from '../../components/EmptyState';
+import { generateProjectReport } from '../../services/ReportService';
+import { FileText } from 'lucide-react-native';
 
 export default function TareasScreen({ route, navigation }: any) {
   const { proyectoId, proyectoNombre } = route.params;
@@ -21,7 +23,6 @@ export default function TareasScreen({ route, navigation }: any) {
   const [menuVisible, setMenuVisible] = useState(false);
   const [selectedTarea, setSelectedTarea] = useState<any>(null);
 
-  // Form State
   const [modalVisible, setModalVisible] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [form, setForm] = useState({
@@ -38,6 +39,7 @@ export default function TareasScreen({ route, navigation }: any) {
   const [deleteModalVisible, setDeleteModalVisible] = useState(false);
   const [tareaToDelete, setTareaToDelete] = useState<any>(null);
   const [deleting, setDeleting] = useState(false);
+  const [generatingReport, setGeneratingReport] = useState(false);
 
   const canEdit = user?.permisos?.includes('EDITAR_TAREA');
   const canDelete = user?.permisos?.includes('ELIMINAR_TAREA');
@@ -114,7 +116,6 @@ export default function TareasScreen({ route, navigation }: any) {
       }, 300);
       fetchData();
     } catch (error) {
-      // Error handled by interceptor
     } finally {
       setSaving(false);
     }
@@ -147,16 +148,41 @@ export default function TareasScreen({ route, navigation }: any) {
       }, 300);
       fetchData();
     } catch (e) {
-      // Error handled by interceptor
     } finally {
       setDeleting(false);
     }
   };
 
+  const handleGenerateReport = async () => {
+    setGeneratingReport(true);
+    try {
+      await generateProjectReport(proyectoId, proyectoNombre, user?.rol?.nombre === 'CLIENTE');
+    } catch (error) {
+      Toast.show({ type: 'error', text1: 'Error', text2: 'No se pudo generar el reporte', position: 'top' });
+    } finally {
+      setGeneratingReport(false);
+    }
+  };
+
   useEffect(() => {
     fetchData();
-    navigation.setOptions({ title: `Tareas: ${proyectoNombre}` });
-  }, []);
+    navigation.setOptions({ 
+      title: `Tareas: ${proyectoNombre}`,
+      headerRight: () => (
+        <TouchableOpacity 
+          onPress={handleGenerateReport} 
+          disabled={generatingReport}
+          style={{ marginRight: 10, padding: 8, backgroundColor: '#3b82f620', borderRadius: 10 }}
+        >
+          {generatingReport ? (
+            <ActivityIndicator size="small" color="#3b82f6" />
+          ) : (
+            <FileText color="#3b82f6" size={20} />
+          )}
+        </TouchableOpacity>
+      )
+    });
+  }, [generatingReport]);
 
   const getStatusColor = (status: string) => {
     switch (status) {

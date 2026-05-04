@@ -16,6 +16,8 @@ import {
   BarChart2
 } from 'lucide-react-native';
 import dayjs from 'dayjs';
+import { generateProjectReport } from '../../services/ReportService';
+import { FileText } from 'lucide-react-native';
 
 interface Proyecto {
   id: number;
@@ -45,6 +47,7 @@ export default function PortalClienteScreen() {
   const [selectedProyecto, setSelectedProyecto] = useState<Proyecto | null>(null);
   const [tareas, setTareas] = useState<Tarea[]>([]);
   const [loadingTareas, setLoadingTareas] = useState(false);
+  const [generatingReport, setGeneratingReport] = useState(false);
 
   const fetchData = async () => {
     try {
@@ -53,7 +56,6 @@ export default function PortalClienteScreen() {
       const projectsArray = Array.isArray(data) ? data : (data.data || []);
       setProyectos(projectsArray);
     } catch (error) {
-      // Error fetching portal data
     } finally {
       setLoading(false);
       setRefreshing(false);
@@ -76,9 +78,19 @@ export default function PortalClienteScreen() {
       const data = res.data.data || res.data;
       setTareas(data.tareas || []);
     } catch (error) {
-      // Error fetching tasks
     } finally {
       setLoadingTareas(false);
+    }
+  };
+
+  const handleGenerateReport = async () => {
+    if (!selectedProyecto) return;
+    setGeneratingReport(true);
+    try {
+      await generateProjectReport(selectedProyecto.id, selectedProyecto.nombre, true);
+    } catch (error) {
+    } finally {
+      setGeneratingReport(false);
     }
   };
 
@@ -119,12 +131,29 @@ export default function PortalClienteScreen() {
 
     return (
       <View style={styles.tasksContainer}>
-        <TouchableOpacity style={styles.backButton} onPress={() => setSelectedProyecto(null)}>
-          <View style={styles.backButtonInner}>
-            <ArrowLeft color="#3b82f6" size={18} />
-            <Text style={styles.backButtonText}>Volver a Proyectos</Text>
-          </View>
-        </TouchableOpacity>
+        <View style={styles.detailHeaderActions}>
+          <TouchableOpacity style={styles.backButton} onPress={() => setSelectedProyecto(null)}>
+            <View style={styles.backButtonInner}>
+              <ArrowLeft color="#3b82f6" size={18} />
+              <Text style={styles.backButtonText}>Volver</Text>
+            </View>
+          </TouchableOpacity>
+
+          <TouchableOpacity 
+            style={[styles.reportButtonSmall, generatingReport && { opacity: 0.7 }]} 
+            onPress={handleGenerateReport}
+            disabled={generatingReport}
+          >
+            {generatingReport ? (
+              <ActivityIndicator size="small" color="#fff" />
+            ) : (
+              <>
+                <FileText color="#fff" size={14} />
+                <Text style={styles.reportButtonText}>Reporte</Text>
+              </>
+            )}
+          </TouchableOpacity>
+        </View>
 
         <View style={styles.projectHeaderDetail}>
           <View style={styles.projectTitleContainer}>
@@ -184,7 +213,6 @@ export default function PortalClienteScreen() {
             const isCompleted = tarea.estado === 'COMPLETADA';
             const isInProgress = tarea.estado === 'EN_PROGRESO';
             
-            // Cálculo de posición para el Gantt
             const projectStart = dayjs(selectedProyecto?.fechaInicio);
             const projectEnd = selectedProyecto?.fechaFin ? dayjs(selectedProyecto?.fechaFin) : dayjs().add(1, 'month');
             const projectDuration = projectEnd.diff(projectStart, 'day') || 1;
@@ -207,7 +235,6 @@ export default function PortalClienteScreen() {
                   </View>
                 </View>
 
-                {/* Visualización de la barra temporal del Gantt */}
                 <View style={styles.ganttTrackFull}>
                   <View 
                     style={[
@@ -305,8 +332,6 @@ export default function PortalClienteScreen() {
                       </View>
                     </View>
 
-                    
-                    
                     <View style={styles.cardFooterAction}>
                        <BarChart2 color="#3b82f6" size={16} />
                        <Text style={styles.actionText}>Ver Diagrama Gantt</Text>
@@ -393,4 +418,7 @@ const styles = StyleSheet.create({
   tasksContainer: { marginTop: 8 },
   emptyState: { alignItems: 'center', justifyContent: 'center', paddingVertical: 60 },
   emptyText: { marginTop: 16, color: '#475569', fontSize: 16, textAlign: 'center' },
+  detailHeaderActions: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 },
+  reportButtonSmall: { flexDirection: 'row', alignItems: 'center', gap: 6, backgroundColor: '#3b82f6', paddingHorizontal: 12, paddingVertical: 8, borderRadius: 10 },
+  reportButtonText: { color: '#fff', fontSize: 12, fontWeight: 'bold' },
 });
