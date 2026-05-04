@@ -5,12 +5,17 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "userInterfaceStyle": "dark",
+    "icon": "./assets/icon.png",
     "ios": {
       "supportsTablet": true
     },
     "android": {
       "backgroundColor": "#0f172a",
-      "package": "com.kenneth30flp.proyectoempresarialmovil"
+      "package": "com.kenneth30flp.proyectoempresarialmovil",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/icon.png",
+        "backgroundColor": "#0f172a"
+      }
     },
     "web": {
       "backgroundColor": "#0f172a"
