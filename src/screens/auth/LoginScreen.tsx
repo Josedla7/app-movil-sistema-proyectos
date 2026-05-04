@@ -18,7 +18,7 @@ export default function LoginScreen() {
         type: 'error',
         text1: 'Error',
         text2: 'Por favor ingresa correo y contraseña',
-        position: 'bottom'
+        position: 'top'
       });
       return;
     }

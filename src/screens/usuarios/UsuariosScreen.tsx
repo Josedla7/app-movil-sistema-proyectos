@@ -73,7 +73,7 @@ export default function UsuariosScreen() {
 
   const handleSubmit = async () => {
     if (!form.nombre || !form.correo || (!isEditing && !form.contrasena) || !form.rolId) {
-      Toast.show({ type: 'error', text1: 'Error', text2: 'Todos los campos son obligatorios', position: 'bottom' });
+      Toast.show({ type: 'error', text1: 'Error', text2: 'Todos los campos son obligatorios', position: 'top' });
       return;
     }
 
@@ -87,7 +87,7 @@ export default function UsuariosScreen() {
       }
       setModalVisible(false);
       setTimeout(() => {
-        Toast.show({ type: 'success', text1: 'Éxito', text2: isEditing ? 'Usuario actualizado correctamente' : 'Usuario creado correctamente', position: 'bottom' });
+        Toast.show({ type: 'success', text1: 'Éxito', text2: isEditing ? 'Usuario actualizado correctamente' : 'Usuario creado correctamente', position: 'top' });
       }, 300);
       fetchData();
     } catch (error) {
@@ -129,7 +129,7 @@ export default function UsuariosScreen() {
       await api.delete(`/usuarios/${userToDelete.id}`);
       setDeleteModalVisible(false);
       setTimeout(() => {
-        Toast.show({ type: 'success', text1: 'Éxito', text2: 'Usuario eliminado correctamente', position: 'bottom' });
+        Toast.show({ type: 'success', text1: 'Éxito', text2: 'Usuario eliminado correctamente', position: 'top' });
       }, 300);
       fetchData();
     } catch (e) {

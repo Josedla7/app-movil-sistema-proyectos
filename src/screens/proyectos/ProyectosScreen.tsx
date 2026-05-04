@@ -87,7 +87,7 @@ export default function ProyectosScreen({ navigation }: any) {
 
   const handleSubmit = async () => {
     if (!form.nombre || !form.clienteId) {
-      Toast.show({ type: 'error', text1: 'Error', text2: 'Nombre y Cliente son obligatorios', position: 'bottom' });
+      Toast.show({ type: 'error', text1: 'Error', text2: 'Nombre y Cliente son obligatorios', position: 'top' });
       return;
     }
 
@@ -100,7 +100,7 @@ export default function ProyectosScreen({ navigation }: any) {
       }
       setModalVisible(false);
       setTimeout(() => {
-        Toast.show({ type: 'success', text1: 'Éxito', text2: isEditing ? 'Proyecto actualizado correctamente' : 'Proyecto creado correctamente', position: 'bottom' });
+        Toast.show({ type: 'success', text1: 'Éxito', text2: isEditing ? 'Proyecto actualizado correctamente' : 'Proyecto creado correctamente', position: 'top' });
       }, 300);
       fetchData();
     } catch (error) {
@@ -142,7 +142,7 @@ export default function ProyectosScreen({ navigation }: any) {
       await api.delete(`/proyectos/${proyectoToDelete.id}`);
       setDeleteModalVisible(false);
       setTimeout(() => {
-        Toast.show({ type: 'success', text1: 'Éxito', text2: 'Proyecto eliminado correctamente', position: 'bottom' });
+        Toast.show({ type: 'success', text1: 'Éxito', text2: 'Proyecto eliminado correctamente', position: 'top' });
       }, 300);
       fetchData();
     } catch (e) {

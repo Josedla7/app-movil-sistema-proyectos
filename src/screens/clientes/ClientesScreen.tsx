@@ -64,7 +64,7 @@ export default function ClientesScreen() {
 
   const handleSubmit = async () => {
     if (!form.nombre || !form.correo) {
-      Toast.show({ type: 'error', text1: 'Error', text2: 'Nombre y correo son obligatorios', position: 'bottom' });
+      Toast.show({ type: 'error', text1: 'Error', text2: 'Nombre y correo son obligatorios', position: 'top' });
       return;
     }
 
@@ -77,7 +77,7 @@ export default function ClientesScreen() {
       }
       setModalVisible(false);
       setTimeout(() => {
-        Toast.show({ type: 'success', text1: 'Éxito', text2: isEditing ? 'Cliente actualizado correctamente' : 'Cliente creado correctamente', position: 'bottom' });
+        Toast.show({ type: 'success', text1: 'Éxito', text2: isEditing ? 'Cliente actualizado correctamente' : 'Cliente creado correctamente', position: 'top' });
       }, 300);
       fetchClientes();
     } catch (error) {
@@ -119,7 +119,7 @@ export default function ClientesScreen() {
       await api.delete(`/clientes/${clienteToDelete.id}`);
       setDeleteModalVisible(false);
       setTimeout(() => {
-        Toast.show({ type: 'success', text1: 'Éxito', text2: 'Cliente eliminado correctamente', position: 'bottom' });
+        Toast.show({ type: 'success', text1: 'Éxito', text2: 'Cliente eliminado correctamente', position: 'top' });
       }, 300);
       fetchClientes();
     } catch (e) {

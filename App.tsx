@@ -5,6 +5,7 @@ import { AuthProvider } from './src/context/AuthContext';
 import { AppNavigator } from './src/navigation/AppNavigator';
 import Toast from 'react-native-toast-message';
 import SplashScreen from './src/screens/SplashScreen';
+import UpdateChecker from './src/components/UpdateChecker';
 
 export default function App() {
   const [showSplash, setShowSplash] = useState(true);
@@ -19,7 +20,12 @@ export default function App() {
   return (
     <SafeAreaProvider>
       <AuthProvider>
-        {showSplash ? <SplashScreen /> : <AppNavigator />}
+        {showSplash ? <SplashScreen /> : (
+          <>
+            <AppNavigator />
+            <UpdateChecker />
+          </>
+        )}
         <StatusBar style="light" backgroundColor="#0f172a" translucent={false} />
         <Toast />
       </AuthProvider>

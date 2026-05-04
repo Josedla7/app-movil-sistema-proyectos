@@ -97,7 +97,7 @@ export default function TareasScreen({ route, navigation }: any) {
 
   const handleSubmit = async () => {
     if (!form.titulo || !form.responsableId) {
-      Toast.show({ type: 'error', text1: 'Error', text2: 'Título y Responsable son obligatorios', position: 'bottom' });
+      Toast.show({ type: 'error', text1: 'Error', text2: 'Título y Responsable son obligatorios', position: 'top' });
       return;
     }
 
@@ -110,7 +110,7 @@ export default function TareasScreen({ route, navigation }: any) {
       }
       setModalVisible(false);
       setTimeout(() => {
-        Toast.show({ type: 'success', text1: 'Éxito', text2: isEditing ? 'Tarea actualizada correctamente' : 'Tarea creada correctamente', position: 'bottom' });
+        Toast.show({ type: 'success', text1: 'Éxito', text2: isEditing ? 'Tarea actualizada correctamente' : 'Tarea creada correctamente', position: 'top' });
       }, 300);
       fetchData();
     } catch (error) {
@@ -143,7 +143,7 @@ export default function TareasScreen({ route, navigation }: any) {
       await api.delete(`/tareas/${tareaToDelete.id}`);
       setDeleteModalVisible(false);
       setTimeout(() => {
-        Toast.show({ type: 'success', text1: 'Éxito', text2: 'Tarea eliminada correctamente', position: 'bottom' });
+        Toast.show({ type: 'success', text1: 'Éxito', text2: 'Tarea eliminada correctamente', position: 'top' });
       }, 300);
       fetchData();
     } catch (e) {

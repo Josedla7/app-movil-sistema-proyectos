@@ -3,8 +3,8 @@ import * as SecureStore from 'expo-secure-store';
 import { Platform } from 'react-native';
 import Toast from 'react-native-toast-message';
 
-// const API_URL = 'https://gestion-proyectos-5oai.onrender.com/api';
-const API_URL = 'http://192.168.0.4:3000/api';
+const API_URL = 'https://gestion-proyectos-5oai.onrender.com/api';
+// const API_URL = 'http://192.168.0.4:3000/api';
 
 const api = axios.create({
   baseURL: API_URL,
@@ -40,7 +40,7 @@ api.interceptors.response.use(
       type: 'error',
       text1: 'Error',
       text2: errorMessage,
-      position: 'bottom'
+      position: 'top'
     });
 
     return Promise.reject(error);
