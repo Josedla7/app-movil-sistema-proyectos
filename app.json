@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "Proyecto Empresarial",
+    "name": "TechSolutions",
     "slug": "proyecto-empresarial-movil",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "orientation": "portrait",
     "userInterfaceStyle": "dark",
     "icon": "./assets/icon.png",
@@ -11,7 +11,7 @@
     },
     "android": {
       "backgroundColor": "#0f172a",
-      "package": "com.kenneth30flp.proyectoempresarialmovil",
+      "package": "com.anonimo.proyectoempresarialmovil",
       "adaptiveIcon": {
         "foregroundImage": "./assets/icon.png",
         "backgroundColor": "#0f172a"

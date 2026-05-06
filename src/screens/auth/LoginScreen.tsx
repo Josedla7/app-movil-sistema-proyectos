@@ -26,13 +26,13 @@ export default function LoginScreen() {
     setLoadingLocal(true);
     console.log('Intentando login en:', api.defaults.baseURL + '/auth/login');
     console.log('Datos enviados:', { correo, contrasena: '********' });
-    
+
     try {
       const resp = await api.post('/auth/login', { correo, contrasena });
       console.log('Cuerpo de respuesta:', JSON.stringify(resp.data));
-      
+
       const loginData = resp.data.data || resp.data;
-      
+
       if (!loginData.accessToken) {
         throw new Error('No se recibió el token de acceso');
       }
@@ -48,21 +48,19 @@ export default function LoginScreen() {
       } else if (error.request) {
         console.error('No se recibió respuesta del servidor. Verifica tu conexión a internet.');
       }
-      // No necesitamos mostrar un Toast de error aquí porque el interceptor de api.config.ts ya lo hace.
-      // Así evitamos mostrar dos mensajes de error.
     } finally {
       setLoadingLocal(false);
     }
   };
 
   return (
-    <KeyboardAvoidingView 
+    <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       style={styles.container}
     >
       <View style={styles.content}>
         <View style={styles.header}>
-          <Text style={styles.title}>Gestor Empresarial</Text>
+          <Text style={styles.title}>TechSolutions S.A.</Text>
           <Text style={styles.subtitle}>Inicia sesión para continuar</Text>
         </View>
 
@@ -92,8 +90,8 @@ export default function LoginScreen() {
             />
           </View>
 
-          <TouchableOpacity 
-            style={styles.button} 
+          <TouchableOpacity
+            style={styles.button}
             onPress={handleLogin}
             disabled={loadingLocal}
           >

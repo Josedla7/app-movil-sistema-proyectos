@@ -5,7 +5,7 @@ import { useAuth } from '../context/AuthContext';
 import { ActivityIndicator, View, TouchableOpacity } from 'react-native';
 
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { LayoutDashboard, Briefcase, Users, UserCog, FolderHeart, LogOut } from 'lucide-react-native';
+import { LayoutDashboard, Briefcase, Users, UserCog, FolderHeart, LogOut, Clock } from 'lucide-react-native';
 
 import LoginScreen from '../screens/auth/LoginScreen';
 import DashboardScreen from '../screens/dashboard/DashboardScreen';
@@ -14,6 +14,9 @@ import ProyectosScreen from '../screens/proyectos/ProyectosScreen';
 import ClientesScreen from '../screens/clientes/ClientesScreen';
 import UsuariosScreen from '../screens/usuarios/UsuariosScreen';
 import TareasScreen from '../screens/proyectos/TareasScreen';
+import AdminHistoryScreen from '../screens/history/AdminHistoryScreen';
+import ClientHistoryScreen from '../screens/history/ClientHistoryScreen';
+import EmployeeHistoryScreen from '../screens/history/EmployeeHistoryScreen';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -55,6 +58,7 @@ const MainTabs = () => {
           if (route.name === 'Clientes') return <Users color={color} size={size} />;
           if (route.name === 'Usuarios') return <UserCog color={color} size={size} />;
           if (route.name === 'Mis Proyectos') return <FolderHeart color={color} size={size} />;
+          if (route.name === 'Historial') return <Clock color={color} size={size} />;
           return null;
         },
       })}
@@ -75,8 +79,20 @@ const MainTabs = () => {
         <Tab.Screen name="Usuarios" component={UsuariosScreen} />
       )}
 
+      {rol === 'ADMIN' && (
+        <Tab.Screen name="Historial" component={AdminHistoryScreen} />
+      )}
+
       {rol === 'CLIENTE' && (
         <Tab.Screen name="Mis Proyectos" component={PortalClienteScreen} />
+      )}
+
+      {rol === 'CLIENTE' && (
+        <Tab.Screen name="Historial" component={ClientHistoryScreen} />
+      )}
+
+      {rol !== 'ADMIN' && rol !== 'CLIENTE' && (
+        <Tab.Screen name="Historial" component={EmployeeHistoryScreen} />
       )}
     </Tab.Navigator>
   );

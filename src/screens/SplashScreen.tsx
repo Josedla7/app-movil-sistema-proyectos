@@ -41,7 +41,7 @@ export default function SplashScreen() {
           }
         ]}
       >
-        <Text style={styles.logoText}>Gestor<Text style={styles.accentText}>Empresarial</Text></Text>
+        <Text style={styles.logoText}>Tech<Text style={styles.accentText}>Solutions</Text></Text>
         <View style={styles.underline} />
       </Animated.View>
     </View>
